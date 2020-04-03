@@ -1,0 +1,52 @@
+{
+  "name": "dereplication",
+  "version": "0.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "eslint": "eslint src",
+    "eslint-fix": "npm run eslint -- --fix",
+    "prepublishOnly": "rollup -c",
+    "test": "npm run test-coverage && npm run eslint",
+    "test-coverage": "jest --coverage",
+    "test-only": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheminfo/dereplication.git"
+  },
+  "keywords": [],
+  "author": "Océane Patiny",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cheminfo/dereplication/issues"
+  },
+  "homepage": "https://github.com/cheminfo/dereplication#readme",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.9.0",
+    "@types/jest": "^25.1.5",
+    "eslint": "^6.8.0",
+    "eslint-config-cheminfo": "^3.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.2.7",
+    "prettier": "^2.0.2",
+    "rollup": "^2.3.2"
+  }
+}
