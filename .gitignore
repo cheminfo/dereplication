@@ -40,3 +40,9 @@ jspm_packages
 .node_repl_history
 
 lib
+
+# Folders with large files
+data/**/*.csv
+data/**/*.tsv
+data/**/*.mgf
+data/**/*.json

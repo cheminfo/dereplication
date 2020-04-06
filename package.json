@@ -39,14 +39,19 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.9.0",
-    "@types/jest": "^25.1.5",
+    "@types/jest": "^25.2.1",
     "eslint": "^6.8.0",
     "eslint-config-cheminfo": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.2.7",
-    "prettier": "^2.0.2",
-    "rollup": "^2.3.2"
+    "prettier": "^2.0.3",
+    "rollup": "^2.3.3"
+  },
+  "dependencies": {
+    "mgf-parser": "^0.2.1",
+    "openchemlib": "^7.2.3",
+    "papaparse": "^5.2.0"
   }
 }
