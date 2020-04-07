@@ -11,9 +11,13 @@ let mgfRawData = readFileSync(
   'utf8',
 );
 
-let mgfData = parseMGF(mgfRawData, { sortX: true, uniqueX: true });
+let mgfData = parseMGF(mgfRawData, {
+  sortX: true,
+  uniqueX: true,
+  normedY: true,
+});
 
-appendIdCode(mgfData);
+appendIdCode(mgfData); // for now, losing 1/2 of data because of invalid smiles
 
 mgfData = mgfData.filter((entry) => entry.meta.idCode);
 
