@@ -51,6 +51,10 @@
   },
   "dependencies": {
     "mgf-parser": "^0.2.1",
+    "ml-array-normed": "^1.2.0",
+    "ml-array-xy-weighted-merge": "^1.0.1",
+    "ml-distance": "^3.0.0",
+    "ml-spectra-processing": "^2.1.0",
     "openchemlib": "^7.2.3",
     "papaparse": "^5.2.0"
   }
