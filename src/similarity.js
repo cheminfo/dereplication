@@ -5,14 +5,20 @@ import { XY } from 'ml-spectra-processing';
 const cosine = Similarity.cosine;
 
 /**
+ * @typedef {object} SimStats Data type exported by `similarity()`
+ * @property {Array} x X entries of the spectrum
+ * @property {Array} y X entries of the spectrum
+ */
+
+/**
  * Returns the similarity between two spectra
- * @param {array<object>} experiment first spectrum
- * @param {array<object>} prediction second spectrum
+ * @param {Entry} experiment first spectrum
+ * @param {Entry} prediction second spectrum
  * @param {object} options
  * @param {function} [options.algorithm = cosine()] algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
- * @param {object} [options.alignDelta = 1] two values of a experiment and prediction which difference is smaller than alignDelta will be put in the same X slot (considered as common).
+ * @param {object} [options.alignDelta = 1] two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
  * @param {object} [options.minCommon = 6] minimal number of values that must remain in the spectra after alignment.
- * @returns {number} similarity between the two spectra
+ * @returns {SimStats} similarity: similarity between the two spectra, common: number of entries considered common by the align algorithm
  */
 export default function similarity(experiment, prediction, options = {}) {
   const { algorithm = cosine, minCommon = 6, alignDelta = 1 } = options;

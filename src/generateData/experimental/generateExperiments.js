@@ -3,6 +3,7 @@ import { join } from 'path';
 
 import { parse as parseMGF } from 'mgf-parser';
 
+import testSimilarity from '../..';
 import appendIdCode from '../appendIdCode';
 
 // import data from files

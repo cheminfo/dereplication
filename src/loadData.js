@@ -8,7 +8,7 @@ import spectrumWeightedMergeX from 'ml-array-xy-weighted-merge';
  * @param {string} path relative path to json file
  * @param {object} options
  * @param {number} [options.mergeSpan = 1] how close consecutive x values of a spectrum must be to be merged
- * @returns {array<object>} data loaded, parsed and merged
+ * @returns {Data} data loaded, parsed and merged
  */
 export default function loadAndMergeX(path, options = {}) {
   const { mergeSpan = 1 } = options;
@@ -21,10 +21,10 @@ export default function loadAndMergeX(path, options = {}) {
 
 /**
  * makes a weighted merge of the x values of each spectrum too close to each other using `ml-array-xy-weighted-merge`
- * @param {array<object>} data parsed json containing spectra to merge
+ * @param {Data} data parsed json containing spectra to merge
  * @param {object} options
  * @param {number} [options.mergeSpan = 1] how close consecutive x values of a spectrum must be to be merged
- * @returns {array<object>} input data with X values of spectra merged
+ * @returns {Data} input data with X values of spectra merged
  */
 function dataWeightedMergeX(data, options = {}) {
   const { mergeSpan = 1 } = options;

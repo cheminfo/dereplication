@@ -85,7 +85,7 @@ describe('similarity', () => {
     expect(similarity(exp3, pred)).toStrictEqual({ common: 4, similarity: 0 });
   });
   it('same length, all Y slided', () => {
-    // this is very close because one spectrum is
+    // this is very close to 1 because one spectrum is
     // just more intense than the other and it is normalised.
     expect(similarity(exp4, pred).similarity).toBeCloseTo(1, 2);
   });
