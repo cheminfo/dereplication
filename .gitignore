@@ -42,7 +42,7 @@ jspm_packages
 lib
 
 # Folders with large files
-data/**/*.csv
-data/**/*.tsv
-data/**/*.mgf
+*.csv
+*.tsv
+*.mgf
 *.json
