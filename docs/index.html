@@ -105,9 +105,39 @@
               
                 
                 <li><a
+                  href='#simstats'
+                  class="">
+                  SimStats
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#spectrum'
                   class="">
                   Spectrum
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#stats'
+                  class="">
+                  Stats
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#testsimilarity'
+                  class="">
+                  testSimilarity
                   
                 </a>
                 
@@ -133,8 +163,8 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/index.js#L25-L27'>
-      <span>src/index.js</span>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L19-L21'>
+      <span>src/loadData.js</span>
       </a>
     
   </div>
@@ -189,7 +219,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/loadData.js#L29-L44'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L58-L73'>
       <span>src/loadData.js</span>
       </a>
     
@@ -198,7 +228,7 @@
 
   <p>makes a weighted merge of the x values of each spectrum too close to each other using <code>ml-array-xy-weighted-merge</code></p>
 
-    <div class='pre p1 fill-light mt0'>dataWeightedMergeX(data: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>></div>
+    <div class='pre p1 fill-light mt0'>dataWeightedMergeX(data: <a href="#data">Data</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#data">Data</a></div>
   
   
 
@@ -215,7 +245,7 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>)</code>
+            <span class='code bold'>data</span> <code class='quiet'>(<a href="#data">Data</a>)</code>
 	    parsed json containing spectra to merge
 
           </div>
@@ -266,7 +296,7 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>></code>:
+      <code><a href="#data">Data</a></code>:
         input data with X values of spectra merged
 
       
@@ -299,8 +329,8 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/index.js#L18-L23'>
-      <span>src/index.js</span>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L12-L17'>
+      <span>src/loadData.js</span>
       </a>
     
   </div>
@@ -381,7 +411,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/bestMatch.js#L13-L70'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/bestMatch.js#L13-L72'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -390,7 +420,7 @@
 
   <p>Returns a structure with the predicted spectra the most similar to an experimental spectrum</p>
 
-    <div class='pre p1 fill-light mt0'>findBestMatches(experiment: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>, predictions: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#result">Result</a></div>
+    <div class='pre p1 fill-light mt0'>findBestMatches(experiment: <a href="#entry">Entry</a>, predictions: <a href="#data">Data</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#result">Result</a></div>
   
   
 
@@ -407,7 +437,7 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>experiment</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</code>
+            <span class='code bold'>experiment</span> <code class='quiet'>(<a href="#entry">Entry</a>)</code>
 	    Experimental spectrum
 
           </div>
@@ -416,7 +446,7 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>predictions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>)</code>
+            <span class='code bold'>predictions</span> <code class='quiet'>(<a href="#data">Data</a>)</code>
 	    Predicted spectra database
 
           </div>
@@ -468,7 +498,7 @@
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>options.alignDelta</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+  <td class='break-word'><span class='code bold'>options.alignDelta</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
     (default <code>1</code>)
   </td>
@@ -524,7 +554,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/loadData.js#L13-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L31-L49'>
       <span>src/loadData.js</span>
       </a>
     
@@ -533,7 +563,7 @@
 
   <p>Loads, parses a JSON file. Then makes a weighted merge of the x values of each spectrum too close to each other using <code>ml-array-xy-weighted-merge</code></p>
 
-    <div class='pre p1 fill-light mt0'>loadAndMergeX(path: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>></div>
+    <div class='pre p1 fill-light mt0'>loadAndMergeX(path: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#data">Data</a></div>
   
   
 
@@ -551,7 +581,7 @@
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    relative path to json file
+	    Relative path to json file
 
           </div>
           
@@ -582,7 +612,18 @@
   
     (default <code>1</code>)
   </td>
-  <td class='break-word'><span>how close consecutive x values of a spectrum must be to be merged
+  <td class='break-word'><span>How close consecutive x values of a spectrum must be to be merged
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.pathType</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&quot;relative&quot;</code>)
+  </td>
+  <td class='break-word'><span>Allows to define wether the path to the JSON is "relative" or "absolute"
 </span></td>
 </tr>
 
@@ -601,8 +642,8 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>></code>:
-        data loaded, parsed and merged
+      <code><a href="#data">Data</a></code>:
+        Data loaded, parsed and merged
 
       
     
@@ -634,7 +675,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/bestMatch.js#L31-L36'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/bestMatch.js#L32-L37'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -716,7 +757,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/bestMatch.js#L15-L21'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/bestMatch.js#L16-L22'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -805,7 +846,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/similarity.js#L17-L35'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/similarity.js#L23-L42'>
       <span>src/similarity.js</span>
       </a>
     
@@ -814,7 +855,7 @@
 
   <p>Returns the similarity between two spectra</p>
 
-    <div class='pre p1 fill-light mt0'>similarity(experiment: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>, prediction: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
+    <div class='pre p1 fill-light mt0'>similarity(experiment: <a href="#entry">Entry</a>, prediction: <a href="#entry">Entry</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#simstats">SimStats</a></div>
   
   
 
@@ -831,8 +872,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>experiment</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>)</code>
-	    first spectrum
+            <span class='code bold'>experiment</span> <code class='quiet'>(<a href="#entry">Entry</a>)</code>
+	    First spectrum
 
           </div>
           
@@ -840,8 +881,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>prediction</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>)</code>
-	    second spectrum
+            <span class='code bold'>prediction</span> <code class='quiet'>(<a href="#entry">Entry</a>)</code>
+	    Second spectrum
 
           </div>
           
@@ -872,29 +913,31 @@
   
     (default <code>cosine()</code>)
   </td>
-  <td class='break-word'><span>algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+  <td class='break-word'><span>Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
 </span></td>
 </tr>
 
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>options.alignDelta</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+  <td class='break-word'><span class='code bold'>options.alignDelta</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
     (default <code>1</code>)
   </td>
-  <td class='break-word'><span>two values of a experiment and prediction which difference is smaller than alignDelta will be put in the same X slot (considered as common).
+  <td class='break-word'><span>Two values of a experiment and prediction which difference is smaller than 
+<code>alignDelta</code>
+ will be put in the same X slot (considered as common).
 </span></td>
 </tr>
 
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>options.minCommon</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+  <td class='break-word'><span class='code bold'>options.minCommon</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
     (default <code>6</code>)
   </td>
-  <td class='break-word'><span>minimal number of values that must remain in the spectra after alignment.
+  <td class='break-word'><span>Minimal number of values that must remain in the spectra after alignment.
 </span></td>
 </tr>
 
@@ -913,11 +956,86 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
-        similarity: similarity between the two spectra, common: number of entries considered common by the align algorithm
+      <code><a href="#simstats">SimStats</a></code>:
+        Information on the similarity between the 2 spectra
 
       
     
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='simstats'>
+      SimStats
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/similarity.js#L7-L11'>
+      <span>src/similarity.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>SimStats</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>similarity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          : similarity between the two spectra
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>common</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          : number of entries considered common by the align algorithm
+
+          
+        </div>
+      
+    </div>
+  
+
   
 
   
@@ -946,8 +1064,8 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/649946313e4ae0e53bd662ba2fdbcb087472548a/src/index.js#L12-L16'>
-      <span>src/index.js</span>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L6-L10'>
+      <span>src/loadData.js</span>
       </a>
     
   </div>
@@ -991,6 +1109,245 @@
         </div>
       
     </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='stats'>
+      Stats
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/testSimilarity.js#L64-L70'>
+      <span>src/testSimilarity.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>Stats</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>mean</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          : Mean of the array
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>median</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          : Median of the array
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>min</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          : Min of the array
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>max</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          : Max of the array
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='testsimilarity'>
+      testSimilarity
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/testSimilarity.js#L22-L82'>
+      <span>src/testSimilarity.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Test the similarity with predictions for many experiments and return data computed on the matchIndexes</p>
+
+    <div class='pre p1 fill-light mt0'>testSimilarity(experimentsPath: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, predictionsPath: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>experimentsPath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    path to the experiments JSON file
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>predictionsPath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    path to the predictions JSON file
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+            = <code>{}</code>)</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.pathType</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&quot;relative&quot;</code>)
+  </td>
+  <td class='break-word'><span>Allows to define wether the path to the JSONs is "relative" or "absolute"
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.numExperiments</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>10</code>)
+  </td>
+  <td class='break-word'><span>Number of experiments for which the similarity should be computed (
+<code>slice</code>
+ of the input experimental data). Should be 
+<code>NaN</code>
+ if all data must be used.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.mergeSpan</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>1</code>)
+  </td>
+  <td class='break-word'><span>How close consecutive x values of a spectrum must be to be merged when loading data
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.alignDelta</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>1</code>)
+  </td>
+  <td class='break-word'><span>Two values of a experiment and prediction which difference is smaller than 
+<code>alignDelta</code>
+ will be put in the same X slot (considered as common).
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
   
 
   
