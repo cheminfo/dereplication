@@ -6,19 +6,19 @@ const cosine = Similarity.cosine;
 
 /**
  * @typedef {object} SimStats Data type exported by `similarity()`
- * @property {Array} x X entries of the spectrum
- * @property {Array} y X entries of the spectrum
+ * @property {number} similarity similarity between the two spectra
+ * @property {number} common number of entries considered common by the align algorithm
  */
 
 /**
  * Returns the similarity between two spectra
- * @param {Entry} experiment first spectrum
- * @param {Entry} prediction second spectrum
+ * @param {Entry} experiment First spectrum
+ * @param {Entry} prediction Second spectrum
  * @param {object} options
- * @param {function} [options.algorithm = cosine()] algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
- * @param {object} [options.alignDelta = 1] two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
- * @param {object} [options.minCommon = 6] minimal number of values that must remain in the spectra after alignment.
- * @returns {SimStats} similarity: similarity between the two spectra, common: number of entries considered common by the align algorithm
+ * @param {function} [options.algorithm = cosine()] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+ * @param {number} [options.alignDelta = 1] Two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
+ * @param {number} [options.minCommon = 6] Minimal number of values that must remain in the spectra after alignment.
+ * @returns {SimStats} Information on the similarity between the 2 spectra
  */
 export default function similarity(experiment, prediction, options = {}) {
   const { algorithm = cosine, minCommon = 6, alignDelta = 1 } = options;
@@ -27,6 +27,7 @@ export default function similarity(experiment, prediction, options = {}) {
     delta: alignDelta,
     common: true,
   });
+
   let commonCount = aligned.x.length;
 
   if (commonCount < minCommon) {
