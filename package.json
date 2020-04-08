@@ -40,6 +40,7 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.9.0",
     "@types/jest": "^25.2.1",
+    "debug": "^4.1.1",
     "eslint": "^6.8.0",
     "eslint-config-cheminfo": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
