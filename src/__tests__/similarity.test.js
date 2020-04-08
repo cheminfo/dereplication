@@ -1,4 +1,8 @@
+import loadAndMergeX from '../loadData';
 import similarity from '../similarity';
+
+const experimentPath = './__tests__/data/experiment.json';
+let experiment = loadAndMergeX(experimentPath)[0];
 
 const exp = {
   data: { x: [1, 2, 3, 4, 5, 6, 7], y: [1, 2, 3, 4, 5, 6, 7] },
@@ -91,7 +95,10 @@ describe('similarity', () => {
   });
   it('same length, nothing matching', () => {
     // this is very close because one spectrum is
-    // just more intense than the other and it is normalised.
+    // just more intense than the other and it is normalized.
     expect(similarity(exp5, pred2)).toStrictEqual({ common: 7, similarity: 0 });
+  });
+  it('one experiment with itself', () => {
+    expect(similarity(experiment, experiment).similarity).toStrictEqual(1);
   });
 });
