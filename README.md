@@ -4,7 +4,7 @@
 [![build status][ci-image]][ci-url]
 [![npm download][download-image]][download-url]
 
-.
+Handling large JSON files with experimental and predicted mass spectra. Computing similarity between an experiment and a predicted spectrum and finding best match.
 
 ## Installation
 
