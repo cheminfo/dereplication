@@ -16,7 +16,7 @@ export default function loadAndMergeX(path, options = {}) {
   const rawData = readFileSync(join(__dirname, path), 'utf8');
   const data = JSON.parse(rawData);
 
-  return dataWeightedMergeX(data, { groupWidth: mergeSpan });
+  return dataWeightedMergeX(data, { mergeSpan });
 }
 
 /**
