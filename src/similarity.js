@@ -21,14 +21,15 @@ export default function similarity(experiment, prediction, options = {}) {
     delta: alignDelta,
     common: true,
   });
+  let commonCount = aligned.x.length;
 
-  if (aligned.x.length < minCommon) {
+  if (commonCount < minCommon) {
     // console.log('Insufficient common entries.');
-    return 0;
+    return { similarity: 0, common: commonCount };
   }
 
   const y1 = normArray(aligned.y1);
   const y2 = normArray(aligned.y2);
 
-  return algorithm(y1, y2);
+  return { similarity: algorithm(y1, y2), common: commonCount };
 }

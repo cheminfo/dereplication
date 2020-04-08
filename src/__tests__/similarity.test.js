@@ -67,28 +67,31 @@ const pred2 = {
 
 describe('similarity', () => {
   it('should return 1', () => {
-    expect(similarity(exp, pred)).toStrictEqual(1);
+    expect(similarity(exp, pred)).toStrictEqual({ common: 7, similarity: 1 });
   });
   it('should return 0', () => {
-    expect(similarity(exp1, pred)).toStrictEqual(0);
+    expect(similarity(exp1, pred)).toStrictEqual({ common: 3, similarity: 0 });
   });
   it('exp longer than pred, match', () => {
-    expect(similarity(exp2, pred)).toStrictEqual(1);
+    expect(similarity(exp2, pred)).toStrictEqual({ common: 7, similarity: 1 });
   });
   it('pred longer than exp, match', () => {
-    expect(similarity(exp, pred1)).toStrictEqual(1);
+    expect(similarity(exp, pred1)).toStrictEqual({
+      common: 7,
+      similarity: 1,
+    });
   });
   it('same length, all X slided', () => {
-    expect(similarity(exp3, pred)).toStrictEqual(0);
+    expect(similarity(exp3, pred)).toStrictEqual({ common: 4, similarity: 0 });
   });
   it('same length, all Y slided', () => {
     // this is very close because one spectrum is
     // just more intense than the other and it is normalised.
-    expect(similarity(exp4, pred)).toBeCloseTo(1, 2);
+    expect(similarity(exp4, pred).similarity).toBeCloseTo(1, 2);
   });
   it('same length, nothing matching', () => {
     // this is very close because one spectrum is
     // just more intense than the other and it is normalised.
-    expect(similarity(exp5, pred2)).toBe(0);
+    expect(similarity(exp5, pred2)).toStrictEqual({ common: 7, similarity: 0 });
   });
 });
