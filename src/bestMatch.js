@@ -17,13 +17,13 @@ export default function findBestMatches(experiment, predictions, options = {}) {
    * @typedef {Object} Result
    * @property {Entry} exp The experiment data
    * @property {array<Match>} matches All predictions sorted by similarity with exp
-   * @property {number} matchIndex The index of the correct match for exp in matches
+   * @property {number} matchIndex The index of the correct match for exp in matches. It is `NaN`if the similarity between the experiment and its correct match is zero.
    * @property {number} common Number of values considered common between exp and its correct math by the align algorith
    */
   let result = {
     exp: experiment,
     matches: [],
-    matchIndex: NaN,
+    matchIndex: -1,
     common: NaN,
   };
 
@@ -55,10 +55,14 @@ export default function findBestMatches(experiment, predictions, options = {}) {
   for (let i = 0; i < result.matches.length; i++) {
     if (result.matches[i].correctMatch) {
       // console.log('EXACT MATCH INDEX FOUND');
-      result.matchIndex = i;
+      if (result.matches[i].similarity === 0) {
+        result.matchIndex = NaN;
+      } else {
+        result.matchIndex = i;
+      }
     }
   }
-  if (isNaN(result.matchIndex)) {
+  if (result.matchIndex === -1) {
     throw new Error(
       `No exact match found for experiment with id code ${experiment.meta.idCodeNoStereo}`,
     );
