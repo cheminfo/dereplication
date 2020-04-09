@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
+import norm from 'ml-array-normed';
 import spectrumWeightedMergeX from 'ml-array-xy-weighted-merge';
 
 /**
@@ -44,6 +45,11 @@ export default function loadAndMergeX(path, options = {}) {
   }
 
   const data = JSON.parse(rawData);
+
+  // normalizing the spectra at this step
+  for (let datum of data) {
+    datum.data.y = norm(datum.data.y);
+  }
 
   return dataWeightedMergeX(data, { mergeSpan });
 }
