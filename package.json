@@ -46,9 +46,9 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "jest": "^25.2.7",
-    "prettier": "^2.0.3",
-    "rollup": "^2.3.3"
+    "jest": "^25.3.0",
+    "prettier": "^2.0.4",
+    "rollup": "^2.3.4"
   },
   "dependencies": {
     "mgf-parser": "^0.2.1",
@@ -59,7 +59,7 @@
     "ml-array-normed": "^1.2.0",
     "ml-array-xy-weighted-merge": "^1.0.1",
     "ml-distance": "^3.0.0",
-    "ml-spectra-processing": "^2.1.0",
+    "ml-spectra-processing": "^2.1.1",
     "openchemlib": "^7.2.3",
     "papaparse": "^5.2.0"
   }

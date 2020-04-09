@@ -47,7 +47,7 @@ export default function testSimilarity(
   // console.log(experiments.length, predictions.length);
 
   debug(
-    `number experiments: ${experiments.length}, mergeSpan; ${mergeSpan}, alignDelta: ${alignDelta}, algorithm: ${algorithm}`,
+    `number experiments: ${experiments.length}, mergeSpan: ${mergeSpan}, alignDelta: ${alignDelta}, algorithm: ${algorithm}`,
   );
   debug(
     `experiment`.padEnd(12),
