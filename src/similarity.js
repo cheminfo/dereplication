@@ -1,4 +1,4 @@
-import normArray from 'ml-array-normed';
+// import normArray from 'ml-array-normed';
 import { similarity as Similarity } from 'ml-distance';
 import { XY } from 'ml-spectra-processing';
 
@@ -15,7 +15,7 @@ const cosine = Similarity.cosine;
  * @param {Entry} experiment First spectrum
  * @param {Entry} prediction Second spectrum
  * @param {object} options
- * @param {function} [options.algorithm = cosine()] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+ * @param {function} [options.algorithm = cosine] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
  * @param {number} [options.alignDelta = 1] Two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
  * @param {number} [options.minCommon = 6] Minimal number of values that must remain in the spectra after alignment.
  * @returns {SimStats} Information on the similarity between the 2 spectra
@@ -28,15 +28,23 @@ export default function similarity(experiment, prediction, options = {}) {
     common: true,
   });
 
+  // console.log(aligned);
+
   let commonCount = aligned.x.length;
 
   if (commonCount < minCommon) {
     // console.log('Insufficient common entries.');
     return { similarity: 0, common: commonCount };
   }
+  // weighting the data (weight y by x, or x^2 or ...)
+  for (let i = 0; i < aligned.x.length; i++) {
+    aligned.y1[i] *= aligned.x[i] ** 3;
+    aligned.y2[i] *= aligned.x[i] ** 3;
+  }
 
-  const y1 = normArray(aligned.y1);
-  const y2 = normArray(aligned.y2);
+  // norm here gives really bad results!
+  // const y1 = normArray(aligned.y1);
+  // const y2 = normArray(aligned.y2);
 
-  return { similarity: algorithm(y1, y2), common: commonCount };
+  return { similarity: algorithm(aligned.y1, aligned.y2), common: commonCount };
 }
