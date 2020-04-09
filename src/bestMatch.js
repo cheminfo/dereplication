@@ -1,4 +1,8 @@
+import { similarity as Similarity } from 'ml-distance';
+
 import computeSimilarity from './similarity';
+
+const cosine = Similarity.cosine;
 
 /**
  * Returns a structure with the predicted spectra the most similar to an experimental spectrum
@@ -8,10 +12,16 @@ import computeSimilarity from './similarity';
  * @param {number} [options.threshold = 0] Similarity threshold for predicted spectra to be returned
  * @param {number} [options.numberBestMatch = 10] Number of best matching predicted spectra to return in the result (`NaN` to return all)
  * @param {number} [options.alignDelta = 1] Two values of a experiment and prediction which difference is smaller than alignDelta will be put in the same X slot (considered as common and therefore kept to apply the similarity algorithm).
+ * @param {function} [options.algorithm = cosine] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
  * @returns {Result} Best matching predicted spectra and meta information
  */
 export default function findBestMatches(experiment, predictions, options = {}) {
-  const { threshold = 0, numberBestMatch = 10, alignDelta = 1 } = options;
+  const {
+    threshold = 0,
+    numberBestMatch = 10,
+    alignDelta = 1,
+    algorithm = cosine,
+  } = options;
 
   /**
    * @typedef {Object} Result
@@ -27,8 +37,13 @@ export default function findBestMatches(experiment, predictions, options = {}) {
     common: NaN,
   };
 
+  const histogram = {};
+
   for (let prediction of predictions) {
-    let simData = computeSimilarity(experiment, prediction, { alignDelta });
+    let simData = computeSimilarity(experiment, prediction, {
+      alignDelta,
+      algorithm,
+    });
     /**
      * @typedef {Object} Match
      * @property {number} similarity The experiment data
@@ -44,11 +59,18 @@ export default function findBestMatches(experiment, predictions, options = {}) {
       // console.log('FOUND MATCH - similarity: ', match.similarity);
       match.correctMatch = true;
       result.common = simData.common;
+      // console.log('EXPERIMENT: ', experiment.meta.SPECTRUMID);
+      // console.log('PREDICTION: ', prediction.meta.FILENAME);
     }
     if (match.similarity >= threshold) {
       result.matches.push(match);
     }
+
+    if (!histogram[simData.common]) histogram[simData.common] = 0;
+    histogram[simData.common]++;
   }
+
+  // console.log(histogram);
 
   result.matches.sort((a, b) => b.similarity - a.similarity);
 
@@ -56,10 +78,11 @@ export default function findBestMatches(experiment, predictions, options = {}) {
     if (result.matches[i].correctMatch) {
       // console.log('EXACT MATCH INDEX FOUND');
       if (result.matches[i].similarity === 0) {
-        result.matchIndex = NaN;
+        result.matchIndex = predictions.length;
       } else {
-        result.matchIndex = i;
+        result.matchIndex = i + 1;
       }
+      result.similarity = result.matches[i].similarity;
     }
   }
   if (result.matchIndex === -1) {
