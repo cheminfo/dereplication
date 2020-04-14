@@ -25,6 +25,7 @@ const intersection = Similarity.intersection;
  * @param {function} [options.algorithm = intersection] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
  * @param {string} [options.norm = "loadData"] Defines where the spectra should be normalized ("loadData", "similarity", "both" or "none")
  * @param {function} [options.massWeight = defaultMassWeight] Function to weight the y values of spectra by the mass to give more importance to bigger fragments.
+ * @param {number} [options.massFilter = undefined] If defined, the predictions are filtered based on PEPMASS before computing any similarity. If the mass difference is over `massFilter`, `similarity` and `common` are set to 0.
  * @returns {Stats} Stats computed on the array of matchIndex
  */
 export default function testSimilarity(
@@ -34,12 +35,13 @@ export default function testSimilarity(
 ) {
   const {
     pathType = 'relative',
-    numExperiments = 10,
+    numExperiments,
     mergeSpan = 0.05,
     alignDelta = 0.05,
     algorithm = intersection,
     norm = 'loadData',
     massWeight = defaultMassWeight,
+    massFilter = undefined,
   } = options;
 
   let normLoadData;
@@ -66,6 +68,8 @@ export default function testSimilarity(
       throw new Error(`Unknown norm configuration ${norm}`);
   }
 
+  console.time('load data');
+
   let experiments = loadAndMergeX(experimentsPath, {
     pathType,
     mergeSpan,
@@ -77,23 +81,28 @@ export default function testSimilarity(
     norm: normLoadData,
   });
 
-  if (!isNaN(numExperiments)) {
+  console.timeEnd('load data');
+
+  if (numExperiments) {
     experiments = experiments.slice(0, numExperiments);
   }
 
   // console.log(experiments.length, predictions.length);
 
   debug(
-    `number experiments: ${experiments.length}, mergeSpan: ${mergeSpan}, alignDelta: ${alignDelta}, algorithm: ${algorithm}`,
+    `number experiments: ${experiments.length}, mergeSpan: ${mergeSpan}, alignDelta: ${alignDelta}, algorithm: ${algorithm.name}, norm: ${norm}, massWeight: ${massWeight.name}, massFilter: ${massFilter}`,
   );
   debug(
     `experiment`.padEnd(12),
     `common`.padEnd(10),
     `matchIndex`.padEnd(10),
-    `similarity`.padEnd(10),
+    `similarity`.padEnd(15),
+    `sufficientCommon`.padEnd(12),
   );
 
   let indexes = [];
+
+  console.time('treat data');
 
   for (let i = 0; i < experiments.length; i++) {
     const result = findBestMatches(experiments[i], predictions, {
@@ -101,6 +110,7 @@ export default function testSimilarity(
       algorithm,
       norm: normSimilarity,
       massWeight,
+      massFilter,
     });
 
     indexes.push(result.matchIndex);
@@ -109,8 +119,29 @@ export default function testSimilarity(
       `${i + 1}`.padEnd(12),
       `${result.common}`.padEnd(10),
       `${result.matchIndex}`.padEnd(10),
-      `${(result.similarity * 100).toFixed(2)}`.padEnd(10),
+      `${(result.similarity * 100).toFixed(2)}`.padEnd(15),
+      `${result.sufficientCommonCount}`.padEnd(12),
     );
+  }
+  console.timeEnd('treat data');
+
+  const indexHistogram = {};
+  for (let index of indexes) {
+    if (!indexHistogram[index]) indexHistogram[index] = 0;
+    indexHistogram[index]++;
+  }
+  // console.log(indexHistogram);
+
+  const keepInfo = [1, 2, 3, 4, 5];
+  const indexHistogramSubset = {};
+  const indexHistogramSubsetPercent = {};
+
+  for (let key of keepInfo) {
+    if (indexHistogram[key]) {
+      indexHistogramSubset[key] = indexHistogram[key];
+      indexHistogramSubsetPercent[key] =
+        (indexHistogram[key] / experiments.length) * 100;
+    }
   }
 
   /**
@@ -126,6 +157,8 @@ export default function testSimilarity(
     median: median(indexes),
     min: min(indexes),
     max: max(indexes),
+    matchIndexHistogram: indexHistogramSubset,
+    matchIndexHistogramPercent: indexHistogramSubsetPercent,
   };
 
   debug(stats);
