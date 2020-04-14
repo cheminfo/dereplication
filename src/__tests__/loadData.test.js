@@ -1,3 +1,5 @@
+import sum from 'ml-array-sum';
+
 import loadAndMergeX from '../loadData';
 
 const testDataPath = './__tests__/data/loadData.json';
@@ -7,7 +9,7 @@ const absPath =
 
 describe('loadData', () => {
   it('should return merged test data', () => {
-    const results = loadAndMergeX(testDataPath);
+    const results = loadAndMergeX(testDataPath, { norm: false });
 
     // dealing with the DEL character hidden in the idcode (invisible)
     results[0].meta.idCode = escape(results[0].meta.idCode);
@@ -26,7 +28,7 @@ describe('loadData', () => {
     ]);
   });
   it('should parse two simple spectra', () => {
-    const results = loadAndMergeX(simpleSpectra);
+    const results = loadAndMergeX(simpleSpectra, { norm: false });
 
     expect(results).toStrictEqual([
       {
@@ -42,7 +44,10 @@ describe('loadData', () => {
     ]);
   });
   it('test pathType = absolute', () => {
-    const results = loadAndMergeX(absPath, { pathType: 'absolute' });
+    const results = loadAndMergeX(absPath, {
+      pathType: 'absolute',
+      norm: false,
+    });
 
     expect(results).toStrictEqual([
       {
@@ -61,5 +66,10 @@ describe('loadData', () => {
     expect(() => loadAndMergeX(simpleSpectra, { pathType: 'test' })).toThrow(
       'Unknown path type: test',
     );
+  });
+  it('test norm option (norm = true)', () => {
+    const results = loadAndMergeX(simpleSpectra);
+
+    expect(sum(results[0].data.y)).toStrictEqual(1);
   });
 });

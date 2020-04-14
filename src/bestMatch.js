@@ -1,5 +1,6 @@
 import { similarity as Similarity } from 'ml-distance';
 
+import defaultMassWeight from './defaultMassWeight';
 import computeSimilarity from './similarity';
 
 const cosine = Similarity.cosine;
@@ -13,6 +14,8 @@ const cosine = Similarity.cosine;
  * @param {number} [options.numberBestMatch = 10] Number of best matching predicted spectra to return in the result (`NaN` to return all)
  * @param {number} [options.alignDelta = 1] Two values of a experiment and prediction which difference is smaller than alignDelta will be put in the same X slot (considered as common and therefore kept to apply the similarity algorithm).
  * @param {function} [options.algorithm = cosine] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+ * @param {bool} [options.norm = false] If `true`, the spectra data are normalized before being sent to the similarity algorithm.
+ * @param {function} [options.massWeight = defaultMassWeight] Function that norms a y value by a function of x.
  * @returns {Result} Best matching predicted spectra and meta information
  */
 export default function findBestMatches(experiment, predictions, options = {}) {
@@ -21,6 +24,8 @@ export default function findBestMatches(experiment, predictions, options = {}) {
     numberBestMatch = 10,
     alignDelta = 1,
     algorithm = cosine,
+    norm = false,
+    massWeight = defaultMassWeight,
   } = options;
 
   /**
@@ -43,6 +48,8 @@ export default function findBestMatches(experiment, predictions, options = {}) {
     let simData = computeSimilarity(experiment, prediction, {
       alignDelta,
       algorithm,
+      norm,
+      massWeight,
     });
     /**
      * @typedef {Object} Match

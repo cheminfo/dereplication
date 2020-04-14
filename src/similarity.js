@@ -1,6 +1,8 @@
-// import normArray from 'ml-array-normed';
+import normArray from 'ml-array-normed';
 import { similarity as Similarity } from 'ml-distance';
 import { XY } from 'ml-spectra-processing';
+
+import defaultMassWeight from './defaultMassWeight';
 
 const cosine = Similarity.cosine;
 
@@ -18,10 +20,18 @@ const cosine = Similarity.cosine;
  * @param {function} [options.algorithm = cosine] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
  * @param {number} [options.alignDelta = 1] Two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
  * @param {number} [options.minCommon = 6] Minimal number of values that must remain in the spectra after alignment.
+ * @param {bool} [options.norm = false] If `true`, the spectra data are normalized before being sent to the similarity algorithm.
+ * @param {function} [options.massWeight = defaultMassWeight] Function that norms a y value by a function of x.
  * @returns {SimStats} Information on the similarity between the 2 spectra
  */
 export default function similarity(experiment, prediction, options = {}) {
-  const { algorithm = cosine, minCommon = 6, alignDelta = 1 } = options;
+  const {
+    algorithm = cosine,
+    minCommon = 6,
+    alignDelta = 1,
+    norm = false,
+    massWeight = defaultMassWeight,
+  } = options;
 
   let aligned = XY.align(experiment.data, prediction.data, {
     delta: alignDelta,
@@ -36,15 +46,22 @@ export default function similarity(experiment, prediction, options = {}) {
     // console.log('Insufficient common entries.');
     return { similarity: 0, common: commonCount };
   }
+
   // weighting the data (weight y by x, or x^2 or ...)
   for (let i = 0; i < aligned.x.length; i++) {
-    aligned.y1[i] *= aligned.x[i] ** 3;
-    aligned.y2[i] *= aligned.x[i] ** 3;
+    aligned.y1[i] = massWeight(aligned.x[i], aligned.y1[i]);
+    aligned.y2[i] = massWeight(aligned.x[i], aligned.y2[i]);
   }
 
-  // norm here gives really bad results!
-  // const y1 = normArray(aligned.y1);
-  // const y2 = normArray(aligned.y2);
+  let exp = aligned.y1;
+  let pred = aligned.y2;
+  // console.log(exp, pred);
 
-  return { similarity: algorithm(aligned.y1, aligned.y2), common: commonCount };
+  if (norm) {
+    // norm here gives really bad results!
+    exp = normArray(aligned.y1);
+    pred = normArray(aligned.y2);
+  }
+  // console.log(exp, pred);
+  return { similarity: algorithm(exp, pred), common: commonCount };
 }

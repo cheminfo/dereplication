@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-import norm from 'ml-array-normed';
+import normalize from 'ml-array-normed';
 import spectrumWeightedMergeX from 'ml-array-xy-weighted-merge';
 
 /**
@@ -27,10 +27,11 @@ import spectrumWeightedMergeX from 'ml-array-xy-weighted-merge';
  * @param {object} options
  * @param {number} [options.mergeSpan = 1] How close consecutive x values of a spectrum must be to be merged
  * @param {string} [options.pathType = "relative"] Allows to define wether the path to the JSON is "relative" or "absolute"
+ * @param {bool} [options.norm = true] If `true`, the spectra data are normalized before merging too close x values.
  * @returns {Data} Data loaded, parsed and merged
  */
 export default function loadAndMergeX(path, options = {}) {
-  const { pathType = 'relative', mergeSpan = 1 } = options;
+  const { pathType = 'relative', mergeSpan = 1, norm = true } = options;
   let rawData;
 
   switch (pathType) {
@@ -47,8 +48,10 @@ export default function loadAndMergeX(path, options = {}) {
   const data = JSON.parse(rawData);
 
   // normalizing the spectra at this step
-  for (let datum of data) {
-    datum.data.y = norm(datum.data.y);
+  if (norm) {
+    for (let datum of data) {
+      datum.data.y = normalize(datum.data.y);
+    }
   }
 
   return dataWeightedMergeX(data, { mergeSpan });

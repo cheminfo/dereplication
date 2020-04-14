@@ -6,11 +6,12 @@ import min from 'ml-array-min';
 import { similarity as Similarity } from 'ml-distance';
 
 import findBestMatches from './bestMatch';
+import defaultMassWeight from './defaultMassWeight';
 import loadAndMergeX from './loadData';
 
 const debug = Debug('testSimilarity');
 
-const cosine = Similarity.cosine;
+const intersection = Similarity.intersection;
 
 /**
  * Test the similarity with predictions for many experiments and return data computed on the matchIndexes
@@ -19,9 +20,11 @@ const cosine = Similarity.cosine;
  * @param {object} options
  * @param {string} [options.pathType = "relative"] Allows to define wether the path to the JSONs is "relative" or "absolute"
  * @param {number} [options.numExperiments = 10] Number of experiments for which the similarity should be computed (`slice` of the input experimental data). Should be `NaN` if all data must be used.
- * @param {number} [options.mergeSpan = 1] How close consecutive x values of a spectrum must be to be merged when loading data
- * @param {number} [options.alignDelta = 1] Two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
- * @param {function} [options.algorithm = cosine] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+ * @param {number} [options.mergeSpan = 0.05] How close consecutive x values of a spectrum must be to be merged when loading data
+ * @param {number} [options.alignDelta = 0.05] Two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
+ * @param {function} [options.algorithm = intersection] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+ * @param {string} [options.norm = "loadData"] Defines where the spectra should be normalized ("loadData", "similarity", "both" or "none")
+ * @param {function} [options.massWeight = defaultMassWeight] Function to weight the y values of spectra by the mass to give more importance to bigger fragments.
  * @returns {Stats} Stats computed on the array of matchIndex
  */
 export default function testSimilarity(
@@ -32,13 +35,47 @@ export default function testSimilarity(
   const {
     pathType = 'relative',
     numExperiments = 10,
-    mergeSpan = 1,
-    alignDelta = 1,
-    algorithm = cosine,
+    mergeSpan = 0.05,
+    alignDelta = 0.05,
+    algorithm = intersection,
+    norm = 'loadData',
+    massWeight = defaultMassWeight,
   } = options;
 
-  let experiments = loadAndMergeX(experimentsPath, { pathType, mergeSpan });
-  let predictions = loadAndMergeX(predictionsPath, { pathType, mergeSpan });
+  let normLoadData;
+  let normSimilarity;
+
+  switch (norm) {
+    case 'loadData':
+      normLoadData = true;
+      normSimilarity = false;
+      break;
+    case 'similarity':
+      normLoadData = false;
+      normSimilarity = true;
+      break;
+    case 'both':
+      normLoadData = true;
+      normSimilarity = true;
+      break;
+    case 'none':
+      normLoadData = false;
+      normSimilarity = false;
+      break;
+    default:
+      throw new Error(`Unknown norm configuration ${norm}`);
+  }
+
+  let experiments = loadAndMergeX(experimentsPath, {
+    pathType,
+    mergeSpan,
+    norm: normLoadData,
+  });
+  let predictions = loadAndMergeX(predictionsPath, {
+    pathType,
+    mergeSpan,
+    norm: normLoadData,
+  });
 
   if (!isNaN(numExperiments)) {
     experiments = experiments.slice(0, numExperiments);
@@ -62,6 +99,8 @@ export default function testSimilarity(
     const result = findBestMatches(experiments[i], predictions, {
       alignDelta,
       algorithm,
+      norm: normSimilarity,
+      massWeight,
     });
 
     indexes.push(result.matchIndex);
