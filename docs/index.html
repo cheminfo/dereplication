@@ -45,6 +45,16 @@
               
                 
                 <li><a
+                  href='#defaultmassweight'
+                  class="">
+                  defaultMassWeight
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#entry'
                   class="">
                   Entry
@@ -163,7 +173,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L19-L21'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/loadData.js#L20-L22'>
       <span>src/loadData.js</span>
       </a>
     
@@ -219,7 +229,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L58-L73'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/loadData.js#L67-L82'>
       <span>src/loadData.js</span>
       </a>
     
@@ -324,12 +334,95 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='defaultmassweight'>
+      defaultMassWeight
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/defaultMassWeight.js#L7-L10'>
+      <span>src/defaultMassWeight.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Default function used to weight the experimental and predicted spectra: <code>y = y*x^3</code>. The y values are a function of the x values.</p>
+
+    <div class='pre p1 fill-light mt0'>defaultMassWeight(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    x value
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    y value
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        weighted y value
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='entry'>
       Entry
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L12-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/loadData.js#L13-L18'>
       <span>src/loadData.js</span>
       </a>
     
@@ -411,7 +504,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/bestMatch.js#L13-L72'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/bestMatch.js#L21-L106'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -508,6 +601,41 @@
 
 
               
+                <tr>
+  <td class='break-word'><span class='code bold'>options.algorithm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+  
+    (default <code>cosine</code>)
+  </td>
+  <td class='break-word'><span>Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.norm</span> <code class='quiet'>bool</code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>If 
+<code>true</code>
+, the spectra data are normalized before being sent to the similarity algorithm.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.massWeight</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+  
+    (default <code>defaultMassWeight</code>)
+  </td>
+  <td class='break-word'><span>Function that norms a y value by a function of x.
+</span></td>
+</tr>
+
+
+              
             </tbody>
           </table>
           
@@ -554,7 +682,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L31-L49'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/loadData.js#L33-L58'>
       <span>src/loadData.js</span>
       </a>
     
@@ -629,6 +757,19 @@
 
 
               
+                <tr>
+  <td class='break-word'><span class='code bold'>options.norm</span> <code class='quiet'>bool</code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>If 
+<code>true</code>
+, the spectra data are normalized before merging too close x values.
+</span></td>
+</tr>
+
+
+              
             </tbody>
           </table>
           
@@ -675,7 +816,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/bestMatch.js#L32-L37'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/bestMatch.js#L54-L59'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -757,7 +898,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/bestMatch.js#L16-L22'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/bestMatch.js#L31-L37'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -803,7 +944,9 @@
       
         <div class='space-bottom0'>
           <span class='code bold'>matchIndex</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-          : The index of the correct match for exp in matches
+          : The index of the correct match for exp in matches. It is 
+<code>NaN</code>
+if the similarity between the experiment and its correct match is zero.
 
           
         </div>
@@ -846,7 +989,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/similarity.js#L23-L42'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/similarity.js#L27-L67'>
       <span>src/similarity.js</span>
       </a>
     
@@ -911,7 +1054,7 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.algorithm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
   
-    (default <code>cosine()</code>)
+    (default <code>cosine</code>)
   </td>
   <td class='break-word'><span>Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
 </span></td>
@@ -938,6 +1081,30 @@
     (default <code>6</code>)
   </td>
   <td class='break-word'><span>Minimal number of values that must remain in the spectra after alignment.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.norm</span> <code class='quiet'>bool</code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>If 
+<code>true</code>
+, the spectra data are normalized before being sent to the similarity algorithm.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.massWeight</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+  
+    (default <code>defaultMassWeight</code>)
+  </td>
+  <td class='break-word'><span>Function that norms a y value by a function of x.
 </span></td>
 </tr>
 
@@ -989,7 +1156,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/similarity.js#L7-L11'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/similarity.js#L9-L13'>
       <span>src/similarity.js</span>
       </a>
     
@@ -1064,7 +1231,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/loadData.js#L6-L10'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/loadData.js#L7-L11'>
       <span>src/loadData.js</span>
       </a>
     
@@ -1139,7 +1306,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/testSimilarity.js#L64-L70'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/testSimilarity.js#L116-L122'>
       <span>src/testSimilarity.js</span>
       </a>
     
@@ -1228,7 +1395,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2f6dcdcb4688f75781e7c0ad26c34013dee12044/src/testSimilarity.js#L22-L82'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/d2bf8e0ad3ee8885631cd0b2a74735991517f655/src/testSimilarity.js#L30-L134'>
       <span>src/testSimilarity.js</span>
       </a>
     
@@ -1237,7 +1404,7 @@
 
   <p>Test the similarity with predictions for many experiments and return data computed on the matchIndexes</p>
 
-    <div class='pre p1 fill-light mt0'>testSimilarity(experimentsPath: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, predictionsPath: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</div>
+    <div class='pre p1 fill-light mt0'>testSimilarity(experimentsPath: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, predictionsPath: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#stats">Stats</a></div>
   
   
 
@@ -1319,7 +1486,7 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.mergeSpan</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>1</code>)
+    (default <code>0.05</code>)
   </td>
   <td class='break-word'><span>How close consecutive x values of a spectrum must be to be merged when loading data
 </span></td>
@@ -1330,11 +1497,44 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.alignDelta</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>1</code>)
+    (default <code>0.05</code>)
   </td>
   <td class='break-word'><span>Two values of a experiment and prediction which difference is smaller than 
 <code>alignDelta</code>
  will be put in the same X slot (considered as common).
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.algorithm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+  
+    (default <code>intersection</code>)
+  </td>
+  <td class='break-word'><span>Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.norm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&quot;loadData&quot;</code>)
+  </td>
+  <td class='break-word'><span>Defines where the spectra should be normalized ("loadData", "similarity", "both" or "none")
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.massWeight</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+  
+    (default <code>defaultMassWeight</code>)
+  </td>
+  <td class='break-word'><span>Function to weight the y values of spectra by the mass to give more importance to bigger fragments.
 </span></td>
 </tr>
 
@@ -1350,6 +1550,14 @@
 
   
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#stats">Stats</a></code>:
+        Stats computed on the array of matchIndex
+
+      
+    
   
 
   
