@@ -68,7 +68,7 @@ export default function testSimilarity(
       throw new Error(`Unknown norm configuration ${norm}`);
   }
 
-  console.time('load data');
+  const startLoadData = Date.now();
 
   let experiments = loadAndMergeX(experimentsPath, {
     pathType,
@@ -81,7 +81,7 @@ export default function testSimilarity(
     norm: normLoadData,
   });
 
-  console.timeEnd('load data');
+  debug('time to load data: ', Date.now() - startLoadData);
 
   if (numExperiments) {
     experiments = experiments.slice(0, numExperiments);
@@ -102,7 +102,7 @@ export default function testSimilarity(
 
   let indexes = [];
 
-  console.time('treat data');
+  const startTreatData = Date.now();
 
   for (let i = 0; i < experiments.length; i++) {
     const result = findBestMatches(experiments[i], predictions, {
@@ -123,7 +123,7 @@ export default function testSimilarity(
       `${result.sufficientCommonCount}`.padEnd(12),
     );
   }
-  console.timeEnd('treat data');
+  debug('time to treat data: ', Date.now() - startTreatData);
 
   const indexHistogram = {};
   for (let index of indexes) {
@@ -132,15 +132,17 @@ export default function testSimilarity(
   }
   // console.log(indexHistogram);
 
-  const keepInfo = [1, 2, 3, 4, 5];
+  const keepInfo = [1, 2, 3, 4, 5, predictions.length];
   const indexHistogramSubset = {};
   const indexHistogramSubsetPercent = {};
 
   for (let key of keepInfo) {
     if (indexHistogram[key]) {
       indexHistogramSubset[key] = indexHistogram[key];
-      indexHistogramSubsetPercent[key] =
-        (indexHistogram[key] / experiments.length) * 100;
+      indexHistogramSubsetPercent[key] = `${(
+        (indexHistogram[key] / experiments.length) *
+        100
+      ).toFixed(2)}`;
     }
   }
 
