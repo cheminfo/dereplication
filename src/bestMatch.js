@@ -1,36 +1,29 @@
-import { similarity as Similarity } from 'ml-distance';
-
-import defaultMassWeight from './defaultMassWeight';
 import computeSimilarity from './similarity';
-
-const cosine = Similarity.cosine;
 
 /**
  * Returns a structure with the predicted spectra the most similar to an experimental spectrum
  * @param {Entry} experiment Experimental spectrum
  * @param {Data} predictions Predicted spectra database
- * @param {object} options
- * @param {number} [options.threshold = 0] Similarity threshold for predicted spectra to be returned
- * @param {number} [options.numberBestMatch = 10] Number of best matching predicted spectra to return in the result (`NaN` to return all)
- * @param {number} [options.alignDelta = 0.05] Two values of a experiment and prediction which difference is smaller than alignDelta will be put in the same X slot (considered as common and therefore kept to apply the similarity algorithm).
- * @param {function} [options.algorithm = cosine] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
- * @param {bool} [options.norm = false] If `true`, the spectra data are normalized before being sent to the similarity algorithm.
- * @param {function} [options.massWeight = defaultMassWeight] Function that norms a y value by a function of x.
- * @param {number} [options.minCommon = 6] Minimal number of values that must remain in the spectra after alignment to run the similarity algorithm.
- * @param {number} [options.massFilter = undefined] If defined, the predictions are filtered based on PEPMASS before computing any similarity. If the mass difference is over `massFilter`, `similarity` and `common` are set to 0.
+ * @param {object} [options={}]
+ * @param {number} [options.massFilter=0.05] If defined, the predictions are filtered based on PEPMASS before computing any similarity. If the mass difference is over `massFilter`, `similarity` and `common` are set to 0.
+ * @param {number} [options.threshold=0] Similarity threshold for predicted spectra to be returned
+ * @param {number} [options.numberBestMatch=10] Number of best matching predicted spectra to return in the result (`undefined` to return all)
+ * @param {object}   [similarity={}]
+ * @param {function} [similarity.algorithm=intersection] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+ * @param {number}   [similarity.alignDelta=0.05] Two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
+ * @param {number}   [similarity.minCommon=6] Minimal number of values that must remain in the spectra after alignment.
+ * @param {bool}     [similarity.norm=false] If `true`, the spectra data are normalized before being sent to the similarity algorithm.
+ * @param {function} [similarity.massWeight=defaultMassWeight] Function that weights a y value by a function of x.
  * @returns {Result} Best matching predicted spectra and meta information
  */
-export default function findBestMatches(experiment, predictions, options = {}) {
-  const {
-    threshold = 0,
-    numberBestMatch = 10,
-    alignDelta = 0.05,
-    algorithm = cosine,
-    norm = false,
-    massWeight = defaultMassWeight,
-    minCommon = 6,
-    massFilter = undefined,
-  } = options;
+export default function findBestMatches(
+  experiment,
+  predictions,
+  options = {},
+  similarity = {},
+) {
+  const { massFilter = 0.05, threshold = 0, numberBestMatch = 10 } = options;
+  const { minCommon = 6 } = similarity;
 
   /**
    * @typedef {Object} Result
@@ -72,12 +65,7 @@ export default function findBestMatches(experiment, predictions, options = {}) {
       match.similarity = 0;
       exactMatchCommon = 0;
     } else {
-      let simData = computeSimilarity(experiment, prediction, {
-        alignDelta,
-        algorithm,
-        norm,
-        massWeight,
-      });
+      let simData = computeSimilarity(experiment, prediction, similarity);
 
       match.similarity = simData.similarity;
       exactMatchCommon = simData.common;
@@ -127,7 +115,7 @@ export default function findBestMatches(experiment, predictions, options = {}) {
     );
   }
 
-  if (!isNaN(numberBestMatch) && result.matches.length > numberBestMatch) {
+  if (numberBestMatch && result.matches.length > numberBestMatch) {
     result.matches = result.matches.slice(0, numberBestMatch - 1);
   }
 

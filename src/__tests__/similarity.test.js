@@ -1,5 +1,9 @@
+import { similarity as Similarity } from 'ml-distance';
+
 import loadAndMergeX from '../loadData';
 import similarity from '../similarity';
+
+const cosine = Similarity.cosine;
 
 const experimentPath = './__tests__/data/experiment.json';
 let exp6 = loadAndMergeX(experimentPath)[0];
@@ -45,12 +49,6 @@ const exp5 = {
   kind: 'test',
 };
 
-const pred = {
-  data: { x: [1, 2, 3, 4, 5, 6, 7], y: [1, 2, 3, 4, 5, 6, 7] },
-  meta: {},
-  kind: 'test',
-};
-
 const pred1 = {
   data: {
     x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -70,34 +68,62 @@ const pred2 = {
 };
 
 describe('similarity', () => {
-  it('should return 1', () => {
-    expect(similarity(exp, pred)).toStrictEqual({ common: 7, similarity: 1 });
-  });
-  it('should return 0', () => {
-    expect(similarity(exp1, pred)).toStrictEqual({ common: 3, similarity: 0 });
-  });
-  it('exp longer than pred, match', () => {
-    expect(similarity(exp2, pred)).toStrictEqual({ common: 7, similarity: 1 });
-  });
-  it('pred longer than exp, match', () => {
-    expect(similarity(exp, pred1)).toStrictEqual({
+  it('should return similarity of 1', () => {
+    expect(
+      similarity(exp, exp, { alignDelta: 1, algorithm: cosine }),
+    ).toStrictEqual({
+      common: 7,
+      similarity: 1,
+    });
+    expect(similarity(exp, exp, { alignDelta: 1, norm: true })).toStrictEqual({
       common: 7,
       similarity: 1,
     });
   });
+  it('should return similarity of 0', () => {
+    expect(similarity(exp1, exp, { alignDelta: 1, norm: true })).toStrictEqual({
+      common: 3,
+      similarity: 0,
+    });
+  });
+  it('exp longer than pred, match', () => {
+    expect(similarity(exp2, exp, { alignDelta: 1, norm: true })).toStrictEqual({
+      common: 7,
+      similarity: 1,
+    });
+  });
+  it('pred longer than exp, match', () => {
+    expect(similarity(exp, pred1, { alignDelta: 1, norm: true })).toStrictEqual(
+      {
+        common: 7,
+        similarity: 1,
+      },
+    );
+  });
   it('same length, all X slided', () => {
-    expect(similarity(exp3, pred)).toStrictEqual({ common: 4, similarity: 0 });
+    expect(similarity(exp3, exp, { alignDelta: 1 })).toStrictEqual({
+      common: 4,
+      similarity: 0,
+    });
   });
   it('same length, all Y slided', () => {
     // this is very close to 1 because one spectrum is
     // just more intense than the other and it is normalized.
-    expect(similarity(exp4, pred).similarity).toBeCloseTo(1, 2);
+    let result = similarity(exp4, exp, {
+      alignDelta: 1,
+      norm: true,
+      massWeight: noWeight,
+    });
+    expect(result.similarity).toBeCloseTo(0.957, 2);
+    expect(result.common).toBe(7);
   });
   it('same length, nothing matching', () => {
     expect(similarity(exp5, pred2)).toStrictEqual({ common: 7, similarity: 0 });
   });
   it('one experiment with itself', () => {
-    expect(similarity(exp6, exp6)).toStrictEqual({
+    expect(
+      similarity(exp6, exp6, { alignDelta: 1, algorithm: cosine }),
+    ).toStrictEqual({
       common: exp6.data.x.length,
       similarity: 1,
     });
@@ -115,14 +141,20 @@ describe('similarity', () => {
         y: [1, 0, 0, 0, 0, 0, 0],
       },
     };
-    expect(similarity(experiment, prediction, { norm: true })).toStrictEqual({
+    expect(
+      similarity(experiment, prediction, { alignDelta: 1, norm: true }),
+    ).toStrictEqual({
       common: 7,
       similarity: 1,
     });
   });
-  it('test massWeight option (no weighting', () => {
+  it('test massWeight option (no weighting)', () => {
     expect(
-      similarity(exp, pred, { norm: false, massWeight: noWeight }),
+      similarity(exp, exp, {
+        alignDelta: 1,
+        norm: true,
+        massWeight: noWeight,
+      }),
     ).toStrictEqual({ common: 7, similarity: 1 });
   });
 });

@@ -1,13 +1,13 @@
 import { similarity as Similarity } from 'ml-distance';
 
-import testSimilarity from './testSimilarity';
+import computeSimilarities from './computeSimilarities';
 
 const intersection = Similarity.intersection;
 
 const experimental = './data/matchingExperiments.json';
 const predicted = './data/predictions.json';
 
-testSimilarity(experimental, predicted, {
+computeSimilarities(experimental, predicted, {
   numExperiments: undefined,
   alignDelta: 0.05,
   mergeSpan: 0.05,

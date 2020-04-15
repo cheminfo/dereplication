@@ -2,9 +2,7 @@ import normArray from 'ml-array-normed';
 import { similarity as Similarity } from 'ml-distance';
 import { XY } from 'ml-spectra-processing';
 
-import defaultMassWeight from './defaultMassWeight';
-
-const cosine = Similarity.cosine;
+const intersection = Similarity.intersection;
 
 /**
  * @typedef {object} SimStats Data type exported by `similarity()`
@@ -16,19 +14,19 @@ const cosine = Similarity.cosine;
  * Returns the similarity between two spectra
  * @param {Entry} experiment First spectrum
  * @param {Entry} prediction Second spectrum
- * @param {object} options
- * @param {function} [options.algorithm = cosine] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
- * @param {number} [options.alignDelta = 1] Two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
- * @param {number} [options.minCommon = 6] Minimal number of values that must remain in the spectra after alignment.
- * @param {bool} [options.norm = false] If `true`, the spectra data are normalized before being sent to the similarity algorithm.
- * @param {function} [options.massWeight = defaultMassWeight] Function that norms a y value by a function of x.
+ * @param {object}   [options={}]
+ * @param {function} [options.algorithm=intersection] Algorithm used to calculate the similarity between the spectra. Default is cosine similarity.
+ * @param {number}   [options.alignDelta=0.05] Two values of a experiment and prediction which difference is smaller than `alignDelta` will be put in the same X slot (considered as common).
+ * @param {number}   [options.minCommon=6] Minimal number of values that must remain in the spectra after alignment.
+ * @param {bool}     [options.norm=false] If `true`, the spectra data are normalized before being sent to the similarity algorithm.
+ * @param {function} [options.massWeight=defaultMassWeight] Function that weights a y value by a function of x.
  * @returns {SimStats} Information on the similarity between the 2 spectra
  */
 export default function similarity(experiment, prediction, options = {}) {
   const {
-    algorithm = cosine,
+    algorithm = intersection,
+    alignDelta = 0.05,
     minCommon = 6,
-    alignDelta = 1,
     norm = false,
     massWeight = defaultMassWeight,
   } = options;
@@ -64,4 +62,15 @@ export default function similarity(experiment, prediction, options = {}) {
   }
   // console.log(exp, pred);
   return { similarity: algorithm(exp, pred), common: commonCount };
+}
+
+/**
+ * Default function used to weight the experimental and predicted spectra: `y=y*x^3`. The y values are a function of the x values.
+ * @param {number} x x value
+ * @param {number} y y value
+ * @returns {number} weighted y value
+ */
+function defaultMassWeight(x, y) {
+  y *= x ** 3;
+  return y;
 }
