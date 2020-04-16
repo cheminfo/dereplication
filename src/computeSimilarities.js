@@ -61,7 +61,7 @@ export default function computeSimilarities(
       loadData.mergeSpan || 0.05
     }, alignDelta: ${similarity.alignDelta || 0.05}, loadData.norm: ${
       loadData.norm || true
-    }, loadData.norm: ${similarity.norm || false}, massWeight: ${
+    }, similarity.norm: ${similarity.norm || false}, massWeight: ${
       similarity.massWeight || '*x^3'
     }, massFilter: ${bestMatch.massFilter || 0.05}`,
   );
