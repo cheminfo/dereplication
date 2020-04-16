@@ -9,7 +9,7 @@ const absPath =
 
 describe('loadData', () => {
   it('should return merged test data', () => {
-    const results = loadAndMergeX(testDataPath, { norm: false });
+    const results = loadAndMergeX(testDataPath, { norm: false, mergeSpan: 1 });
 
     // dealing with the DEL character hidden in the idcode (invisible)
     results[0].meta.idCode = escape(results[0].meta.idCode);
@@ -28,7 +28,7 @@ describe('loadData', () => {
     ]);
   });
   it('should parse two simple spectra', () => {
-    const results = loadAndMergeX(simpleSpectra, { norm: false });
+    const results = loadAndMergeX(simpleSpectra, { norm: false, mergeSpan: 1 });
 
     expect(results).toStrictEqual([
       {
@@ -47,6 +47,7 @@ describe('loadData', () => {
     const results = loadAndMergeX(absPath, {
       pathType: 'absolute',
       norm: false,
+      mergeSpan: 1,
     });
 
     expect(results).toStrictEqual([

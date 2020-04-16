@@ -122,11 +122,11 @@ describe('similarity', () => {
   });
   it('one experiment with itself', () => {
     expect(
-      similarity(exp6, exp6, { alignDelta: 1, algorithm: cosine }),
-    ).toStrictEqual({
-      common: exp6.data.x.length,
-      similarity: 1,
-    });
+      similarity(exp6, exp6, { alignDelta: 1, algorithm: cosine }).common,
+    ).toStrictEqual(exp6.data.x.length);
+    expect(
+      similarity(exp6, exp6, { alignDelta: 1, algorithm: cosine }).similarity,
+    ).toBeCloseTo(1, 2);
   });
   it('test norm option (norm = true)', () => {
     const experiment = {
