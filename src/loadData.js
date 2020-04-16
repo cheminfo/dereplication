@@ -31,7 +31,7 @@ import spectrumWeightedMergeX from 'ml-array-xy-weighted-merge';
  * @returns {Data} Data loaded, parsed and merged
  */
 export default function loadAndMergeX(path, options = {}) {
-  const { pathType = 'relative', mergeSpan = 1, norm = true } = options;
+  const { pathType = 'relative', mergeSpan = 0.05, norm = true } = options;
   let rawData;
 
   switch (pathType) {
