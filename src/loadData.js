@@ -3,6 +3,7 @@ import { join } from 'path';
 
 import normalize from 'ml-array-normed';
 import spectrumWeightedMergeX from 'ml-array-xy-weighted-merge';
+import { XY } from 'ml-spectra-processing';
 
 /**
  * @typedef {object} Spectrum Data type of all the spectra
@@ -25,13 +26,21 @@ import spectrumWeightedMergeX from 'ml-array-xy-weighted-merge';
  * Loads, parses a JSON file. Then makes a weighted merge of the x values of each spectrum too close to each other using `ml-array-xy-weighted-merge`
  * @param {string} path Relative path to json file
  * @param {object} [options={}]
+ * @param {string} [options.treatment="mergeX"] If 'mergeX': x spectra values are merged with span `mergeSpan`, if 'maxPeaks' return `numberMaxPeaks` peaks of the spectra
+ * @param {number} [options.numberMaxPeaks=30] Used if options.treatment='maxPeaks'. Number of max. intensity peaks to keep. This removes some of the spectrum noise.
  * @param {number} [options.mergeSpan=0.05] How close consecutive x values of a spectrum must be to be merged
  * @param {string} [options.pathType="relative"] Allows to define wether the path to the JSON is "relative" or "absolute"
  * @param {bool}   [options.norm=true] If `true`, the spectra data are normalized before merging too close x values.
  * @returns {Data} Data loaded, parsed and merged
  */
 export default function loadAndMergeX(path, options = {}) {
-  const { pathType = 'relative', mergeSpan = 0.05, norm = true } = options;
+  const {
+    pathType = 'relative',
+    treatment = 'mergeX',
+    numberMaxPeaks = 30,
+    mergeSpan = 0.05,
+    norm = true,
+  } = options;
   let rawData;
 
   switch (pathType) {
@@ -45,38 +54,60 @@ export default function loadAndMergeX(path, options = {}) {
       throw new Error(`Unknown path type: ${pathType}`);
   }
 
-  const data = JSON.parse(rawData);
+  const spectra = JSON.parse(rawData);
 
   // normalizing the spectra at this step
   if (norm) {
-    for (let datum of data) {
-      datum.data.y = normalize(datum.data.y);
+    for (let spectrum of spectra) {
+      spectrum.data.y = normalize(spectrum.data.y);
     }
   }
-
-  return dataWeightedMergeX(data, { mergeSpan });
+  switch (treatment) {
+    case 'mergeX':
+      return dataWeightedMergeX(spectra, { mergeSpan });
+    case 'maxPeaks':
+      return dataKeepMaxPeaks(spectra, { numberMaxPeaks });
+    default:
+      throw new Error(`Unknown treatment type: ${treatment}`);
+  }
 }
 
 /**
  * makes a weighted merge of the x values of each spectrum too close to each other using `ml-array-xy-weighted-merge`
- * @param {Data} data parsed json containing spectra to merge
+ * @param {Data} spectra parsed json containing spectra to merge
  * @param {object} options
  * @param {number} [options.mergeSpan=1] how close consecutive x values of a spectrum must be to be merged
  * @returns {Data} input data with X values of spectra merged
  */
-function dataWeightedMergeX(data, options = {}) {
-  const { mergeSpan = 1 } = options;
-  let mergedData = [];
+function dataWeightedMergeX(spectra, options = {}) {
+  const { mergeSpan = 0.05 } = options;
+  let mergedSpectra = [];
 
-  for (let entry of data) {
-    let mergedEntry = {
-      kind: entry.kind,
-      meta: entry.meta,
-      data: spectrumWeightedMergeX(entry.data, {
+  for (let spectrum of spectra) {
+    let mergedSpectrum = {
+      kind: spectrum.kind,
+      meta: spectrum.meta,
+      data: spectrumWeightedMergeX(spectrum.data, {
         groupWidth: mergeSpan,
       }),
     };
-    mergedData.push(mergedEntry);
+    mergedSpectra.push(mergedSpectrum);
   }
-  return mergedData;
+  return mergedSpectra;
+}
+
+function dataKeepMaxPeaks(spectra, options = {}) {
+  const { numberMaxPeaks = 30 } = options;
+
+  let maxPeaksSpectra = [];
+
+  for (let spectrum of spectra) {
+    let maxPeaksSpectrum = {
+      kind: spectrum.kind,
+      meta: spectrum.meta,
+      data: XY.getNMaxY(spectrum.data, numberMaxPeaks),
+    };
+    maxPeaksSpectra.push(maxPeaksSpectrum);
+  }
+  return maxPeaksSpectra;
 }

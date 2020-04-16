@@ -4,6 +4,7 @@ import loadAndMergeX from '../loadData';
 
 const testDataPath = './__tests__/data/loadData.json';
 const simpleSpectra = './__tests__/data/twoSimpleSpectra.json';
+const maxPeaksPath = './__tests__/data/maxPeaks.json';
 const absPath =
   '/home/opatiny/git/cheminfo/dereplication/src/__tests__/data/twoSimpleSpectra.json';
 
@@ -72,5 +73,19 @@ describe('loadData', () => {
     const results = loadAndMergeX(simpleSpectra);
 
     expect(sum(results[0].data.y)).toStrictEqual(1);
+  });
+  it('test treatment option (treatment = "maxPeaks")', () => {
+    const results = loadAndMergeX(maxPeaksPath, {
+      treatment: 'maxPeaks',
+      numberMaxPeaks: 3,
+      norm: false,
+    });
+
+    expect(results[0].data).toStrictEqual({ x: [5, 6, 7], y: [5, 6, 7] });
+  });
+  it('test treatment is unknown type', () => {
+    expect(() => loadAndMergeX(simpleSpectra, { treatment: 'test' })).toThrow(
+      'Unknown treatment type: test',
+    );
   });
 });
