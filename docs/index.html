@@ -45,6 +45,16 @@
               
                 
                 <li><a
+                  href='#datakeepmaxpeaks'
+                  class="">
+                  dataKeepMaxPeaks
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#dataweightedmergex'
                   class="">
                   dataWeightedMergeX
@@ -173,7 +183,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/computeSimilarities.js#L34-L142'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/computeSimilarities.js#L36-L144'>
       <span>src/computeSimilarities.js</span>
       </a>
     
@@ -294,6 +304,32 @@
 
 
   
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.treatment</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&quot;mergeX&quot;</code>)
+  </td>
+  <td class='break-word'><span>If 'mergeX': x spectra values are merged with span 
+<code>mergeSpan</code>
+, if 'maxPeaks' return 
+<code>numberMaxPeaks</code>
+ peaks of the spectra
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.numberMaxPeaks</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>30</code>)
+  </td>
+  <td class='break-word'><span>Used if options.treatment='maxPeaks'. Number of max. intensity peaks to keep. This removes some of the spectrum noise.
+</span></td>
+</tr>
 
 
               
@@ -467,7 +503,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/loadData.js#L20-L22'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/loadData.js#L21-L23'>
       <span>src/loadData.js</span>
       </a>
     
@@ -518,21 +554,21 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='dataweightedmergex'>
-      dataWeightedMergeX
+    <h3 class='fl m0' id='datakeepmaxpeaks'>
+      dataKeepMaxPeaks
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/loadData.js#L67-L82'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/loadData.js#L106-L120'>
       <span>src/loadData.js</span>
       </a>
     
   </div>
   
 
-  <p>makes a weighted merge of the x values of each spectrum too close to each other using <code>ml-array-xy-weighted-merge</code></p>
+  <p>Keeps options.numberMaxPeaks values of each spectrum with highest intensities</p>
 
-    <div class='pre p1 fill-light mt0'>dataWeightedMergeX(data: <a href="#data">Data</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#data">Data</a></div>
+    <div class='pre p1 fill-light mt0'>dataKeepMaxPeaks(spectra: <a href="#data">Data</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#data">Data</a></div>
   
   
 
@@ -549,8 +585,118 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>data</span> <code class='quiet'>(<a href="#data">Data</a>)</code>
-	    parsed json containing spectra to merge
+            <span class='code bold'>spectra</span> <code class='quiet'>(<a href="#data">Data</a>)</code>
+	    Parsed json containing spectra to filter
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+            = <code>{}</code>)</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.numberMaxPeaks</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>30</code>)
+  </td>
+  <td class='break-word'><span>Number of peaks to keep
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#data">Data</a></code>:
+        Input data with spectra filtered
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='dataweightedmergex'>
+      dataWeightedMergeX
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/loadData.js#L82-L97'>
+      <span>src/loadData.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Makes a weighted merge of the x values of each spectrum too close to each other using <code>ml-array-xy-weighted-merge</code></p>
+
+    <div class='pre p1 fill-light mt0'>dataWeightedMergeX(spectra: <a href="#data">Data</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="#data">Data</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>spectra</span> <code class='quiet'>(<a href="#data">Data</a>)</code>
+	    Parsed json containing spectra to merge
 
           </div>
           
@@ -581,7 +727,7 @@
   
     (default <code>1</code>)
   </td>
-  <td class='break-word'><span>how close consecutive x values of a spectrum must be to be merged
+  <td class='break-word'><span>How close consecutive x values of a spectrum must be to be merged
 </span></td>
 </tr>
 
@@ -601,7 +747,7 @@
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="#data">Data</a></code>:
-        input data with X values of spectra merged
+        Input data with X values of spectra merged
 
       
     
@@ -633,7 +779,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/similarity.js#L73-L76'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/similarity.js#L73-L76'>
       <span>src/similarity.js</span>
       </a>
     
@@ -716,7 +862,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/loadData.js#L13-L18'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/loadData.js#L14-L19'>
       <span>src/loadData.js</span>
       </a>
     
@@ -798,7 +944,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/bestMatch.js#L19-L123'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/bestMatch.js#L19-L123'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -1031,7 +1177,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/loadData.js#L33-L58'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/loadData.js#L36-L73'>
       <span>src/loadData.js</span>
       </a>
     
@@ -1083,6 +1229,32 @@
               </tr>
             </thead>
             <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.treatment</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&quot;mergeX&quot;</code>)
+  </td>
+  <td class='break-word'><span>If 'mergeX': x spectra values are merged with span 
+<code>mergeSpan</code>
+, if 'maxPeaks' return 
+<code>numberMaxPeaks</code>
+ peaks of the spectra
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.numberMaxPeaks</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>30</code>)
+  </td>
+  <td class='break-word'><span>Used if options.treatment='maxPeaks'. Number of max. intensity peaks to keep. This removes some of the spectrum noise.
+</span></td>
+</tr>
+
+
               
                 <tr>
   <td class='break-word'><span class='code bold'>options.mergeSpan</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
@@ -1165,7 +1337,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/bestMatch.js#L51-L56'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/bestMatch.js#L51-L56'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -1247,7 +1419,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/bestMatch.js#L28-L35'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/bestMatch.js#L28-L35'>
       <span>src/bestMatch.js</span>
       </a>
     
@@ -1345,7 +1517,7 @@ if the similarity between the experiment and its correct match is zero.
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/similarity.js#L25-L65'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/similarity.js#L25-L65'>
       <span>src/similarity.js</span>
       </a>
     
@@ -1512,7 +1684,7 @@ if the similarity between the experiment and its correct match is zero.
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/similarity.js#L7-L11'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/similarity.js#L7-L11'>
       <span>src/similarity.js</span>
       </a>
     
@@ -1587,7 +1759,7 @@ if the similarity between the experiment and its correct match is zero.
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/loadData.js#L7-L11'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/loadData.js#L8-L12'>
       <span>src/loadData.js</span>
       </a>
     
@@ -1662,7 +1834,7 @@ if the similarity between the experiment and its correct match is zero.
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/7fc6bcce20cf64e106899809c7ecbdf6da99fed9/src/computeSimilarities.js#L122-L128'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git@github.com/:cheminfo/dereplication/blob/2b2d84b4ae404ddaa24bf3421ba60db0703ffe9a/src/computeSimilarities.js#L124-L130'>
       <span>src/computeSimilarities.js</span>
       </a>
     

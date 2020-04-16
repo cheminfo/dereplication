@@ -22,6 +22,8 @@ testAllAlgorithms(simMethods);
  * @param {object} [options={}]
  * @param {number} [options.numExperiments=undefined] Number of experiments for which the similarity should be computed (`slice` of the input experimental data). Should be `undefined` if all data must be used.
  * @param {object} [options.loadData={}]
+ * @param {string} [options.treatment="mergeX"] If 'mergeX': x spectra values are merged with span `mergeSpan`, if 'maxPeaks' return `numberMaxPeaks` peaks of the spectra
+ * @param {number} [options.numberMaxPeaks=30] Used if options.treatment='maxPeaks'. Number of max. intensity peaks to keep. This removes some of the spectrum noise.
  * @param {number} [options.loadData.mergeSpan=0.05] How close consecutive x values of a spectrum must be to be merged
  * @param {string} [options.loadData.pathType="relative"] Allows to define wether the path to the JSON is "relative" or "absolute"
  * @param {bool}   [options.loadData.norm=true] If `true`, the spectra data are normalized before merging too close x values.
