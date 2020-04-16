@@ -12,11 +12,39 @@ Handling large JSON files with experimental and predicted mass spectra. Computin
 
 ## Usage
 
-```js
-import library from 'dereplication';
+The code underneath allows you to have a lot of information about the similarity results between experiments and predictions. To see the debug information, use this command:
+```bash
+DEBUG=testSimilarity node --max-old-space-size=8192 -r esm index.js 
+```
 
-const result = library(args);
-// result is ...
+The `--max-old-space-size=8192` option has to be used because Node.js cannot handle files this large otherwise.
+
+```js
+import { similarity as Similarity } from 'ml-distance';
+
+import computeSimilarities from './computeSimilarities';
+
+const intersection = Similarity.intersection;
+
+const experimental = './data/matchingExperiments.json';
+const predicted = './data/predictions.json';
+
+computeSimilarities(experimental, predicted, {
+  numExperiments: undefined,
+  bestMatch: {
+    massFilter: 0.05,
+  },
+  loadData: {
+    numberMaxPeaks: undefined,
+    mergeSpan: 0.05,
+    norm: true,
+  },
+  similarity: {
+    alignDelta: 0.05,
+    algorithm: intersection,
+    norm: false,
+  },
+});
 ```
 
 ## [API Documentation](https://cheminfo.github.io/dereplication/)
