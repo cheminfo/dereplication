@@ -5,7 +5,7 @@ import median from 'ml-array-median';
 import min from 'ml-array-min';
 
 import findBestMatches from './bestMatch';
-import loadData from './loadData';
+import loadAndTreatData from './loadData';
 
 const debug = Debug('testSimilarity');
 
@@ -16,8 +16,7 @@ const debug = Debug('testSimilarity');
  * @param {object} [options={}]
  * @param {number} [options.numExperiments=undefined] Number of experiments for which the similarity should be computed (`slice` of the input experimental data). Should be `undefined` if all data must be used.
  * @param {object} [options.loadData={}]
- * @param {string} [options.treatment="mergeX"] If 'mergeX': x spectra values are merged with span `mergeSpan`, if 'maxPeaks' return `numberMaxPeaks` peaks of the spectra
- * @param {number} [options.numberMaxPeaks=30] Used if options.treatment='maxPeaks'. Number of max. intensity peaks to keep. This removes some of the spectrum noise.
+ * @param {number} [options.numberMaxPeaks=undefined] If not undefined, defines the number of max. intensity peaks to keep. This removes some of the spectrum noise.
  * @param {number} [options.loadData.mergeSpan=0.05] How close consecutive x values of a spectrum must be to be merged
  * @param {string} [options.loadData.pathType="relative"] Allows to define wether the path to the JSON is "relative" or "absolute"
  * @param {bool}   [options.loadData.norm=true] If `true`, the spectra data are normalized before merging too close x values.
@@ -47,8 +46,8 @@ export default function computeSimilarities(
 
   const startLoadData = Date.now();
 
-  let experiments = loadData(experimentsPath, loadData);
-  let predictions = loadData(predictionsPath, loadData);
+  let experiments = loadAndTreatData(experimentsPath, loadData);
+  let predictions = loadAndTreatData(predictionsPath, loadData);
 
   debug('time to load data: ', Date.now() - startLoadData);
 
@@ -58,14 +57,24 @@ export default function computeSimilarities(
 
   // console.log(experiments.length, predictions.length);
 
+  debug(`OPT`.padEnd(20), `number experiments: ${experiments.length}`);
   debug(
-    `number experiments: ${experiments.length}, mergeSpan: ${
-      loadData.mergeSpan || 0.05
-    }, alignDelta: ${similarity.alignDelta || 0.05}, loadData.norm: ${
+    `OPT-> LOADDATA`.padEnd(20),
+    `treatment: ${loadData.treatment}, numberMaxPeaks: ${
+      loadData.numberMaxPeaks
+    }, mergeSpan: ${loadData.mergeSpan || 0.05}, norm: ${
       loadData.norm || true
-    }, similarity.norm: ${similarity.norm || false}, massWeight: ${
-      similarity.massWeight || '*x^3'
-    }, massFilter: ${bestMatch.massFilter || 0.05}`,
+    }`,
+  );
+  debug(
+    `OPT-> BESTMATCH`.padEnd(20),
+    `massFilter: ${bestMatch.massFilter || 0.05}`,
+  );
+  debug(
+    `OPT-> SIMILARITY`.padEnd(20),
+    `alignDelta: ${similarity.alignDelta || 0.05}, norm: ${
+      similarity.norm || false
+    }, massWeight: ${similarity.massWeight || '*x^3'}`,
   );
 
   debug(
@@ -114,10 +123,10 @@ export default function computeSimilarities(
   for (let key of keepInfo) {
     if (indexHistogram[key]) {
       indexHistogramSubset[key] = indexHistogram[key];
-      indexHistogramSubsetPercent[key] = `${(
+      indexHistogramSubsetPercent[key] = (
         (indexHistogram[key] / experiments.length) *
         100
-      ).toFixed(2)}`;
+      ).toFixed(2);
     }
   }
 
