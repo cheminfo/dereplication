@@ -1,6 +1,6 @@
 import sum from 'ml-array-sum';
 
-import loadAndMergeX from '../loadData';
+import loadData from '../loadData';
 
 const testDataPath = './__tests__/data/loadData.json';
 const simpleSpectra = './__tests__/data/twoSimpleSpectra.json';
@@ -10,7 +10,7 @@ const absPath =
 
 describe('loadData', () => {
   it('should return merged test data', () => {
-    const results = loadAndMergeX(testDataPath, { norm: false, mergeSpan: 1 });
+    const results = loadData(testDataPath, { norm: false, mergeSpan: 1 });
 
     // dealing with the DEL character hidden in the idcode (invisible)
     results[0].meta.idCode = escape(results[0].meta.idCode);
@@ -29,7 +29,7 @@ describe('loadData', () => {
     ]);
   });
   it('should parse two simple spectra', () => {
-    const results = loadAndMergeX(simpleSpectra, { norm: false, mergeSpan: 1 });
+    const results = loadData(simpleSpectra, { norm: false, mergeSpan: 1 });
 
     expect(results).toStrictEqual([
       {
@@ -45,7 +45,7 @@ describe('loadData', () => {
     ]);
   });
   it('test pathType = absolute', () => {
-    const results = loadAndMergeX(absPath, {
+    const results = loadData(absPath, {
       pathType: 'absolute',
       norm: false,
       mergeSpan: 1,
@@ -65,17 +65,17 @@ describe('loadData', () => {
     ]);
   });
   it('test pathType is unknown type', () => {
-    expect(() => loadAndMergeX(simpleSpectra, { pathType: 'test' })).toThrow(
+    expect(() => loadData(simpleSpectra, { pathType: 'test' })).toThrow(
       'Unknown path type: test',
     );
   });
   it('test norm option (norm = true)', () => {
-    const results = loadAndMergeX(simpleSpectra);
+    const results = loadData(simpleSpectra);
 
     expect(sum(results[0].data.y)).toStrictEqual(1);
   });
   it('test treatment option (treatment = "maxPeaks")', () => {
-    const results = loadAndMergeX(maxPeaksPath, {
+    const results = loadData(maxPeaksPath, {
       treatment: 'maxPeaks',
       numberMaxPeaks: 3,
       norm: false,
@@ -84,7 +84,7 @@ describe('loadData', () => {
     expect(results[0].data).toStrictEqual({ x: [5, 6, 7], y: [5, 6, 7] });
   });
   it('test treatment is unknown type', () => {
-    expect(() => loadAndMergeX(simpleSpectra, { treatment: 'test' })).toThrow(
+    expect(() => loadData(simpleSpectra, { treatment: 'test' })).toThrow(
       'Unknown treatment type: test',
     );
   });

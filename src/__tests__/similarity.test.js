@@ -1,12 +1,12 @@
 import { similarity as Similarity } from 'ml-distance';
 
-import loadAndMergeX from '../loadData';
+import loadData from '../loadData';
 import similarity from '../similarity';
 
 const cosine = Similarity.cosine;
 
 const experimentPath = './__tests__/data/experiment.json';
-let exp6 = loadAndMergeX(experimentPath)[0];
+let exp6 = loadData(experimentPath)[0];
 
 const exp = {
   data: { x: [1, 2, 3, 4, 5, 6, 7], y: [1, 2, 3, 4, 5, 6, 7] },

@@ -5,7 +5,7 @@ import median from 'ml-array-median';
 import min from 'ml-array-min';
 
 import findBestMatches from './bestMatch';
-import loadAndMergeX from './loadData';
+import loadData from './loadData';
 
 const debug = Debug('testSimilarity');
 
@@ -47,8 +47,8 @@ export default function computeSimilarities(
 
   const startLoadData = Date.now();
 
-  let experiments = loadAndMergeX(experimentsPath, loadData);
-  let predictions = loadAndMergeX(predictionsPath, loadData);
+  let experiments = loadData(experimentsPath, loadData);
+  let predictions = loadData(predictionsPath, loadData);
 
   debug('time to load data: ', Date.now() - startLoadData);
 

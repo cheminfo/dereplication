@@ -33,7 +33,7 @@ import { XY } from 'ml-spectra-processing';
  * @param {bool}   [options.norm=true] If `true`, the spectra data are normalized before merging too close x values.
  * @returns {Data} Data loaded, parsed and merged
  */
-export default function loadAndMergeX(path, options = {}) {
+export default function loadData(path, options = {}) {
   const {
     pathType = 'relative',
     treatment = 'mergeX',
