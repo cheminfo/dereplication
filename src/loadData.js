@@ -26,8 +26,7 @@ import { XY } from 'ml-spectra-processing';
  * Loads, parses a JSON file. Then makes a weighted merge of the x values of each spectrum too close to each other using `ml-array-xy-weighted-merge`
  * @param {string} path Relative path to json file
  * @param {object} [options={}]
- * @param {string} [options.treatment="mergeX"] If 'mergeX': x spectra values are merged with span `mergeSpan`, if 'maxPeaks' return `numberMaxPeaks` peaks of the spectra
- * @param {number} [options.numberMaxPeaks=30] Used if options.treatment='maxPeaks'. Number of max. intensity peaks to keep. This removes some of the spectrum noise.
+ * @param {number} [options.numberMaxPeaks=30] If not undefined, defines the number of max. intensity peaks to keep. This removes some of the spectrum noise.
  * @param {number} [options.mergeSpan=0.05] How close consecutive x values of a spectrum must be to be merged
  * @param {string} [options.pathType="relative"] Allows to define wether the path to the JSON is "relative" or "absolute"
  * @param {bool}   [options.norm=true] If `true`, the spectra data are normalized before merging too close x values.
@@ -36,8 +35,7 @@ import { XY } from 'ml-spectra-processing';
 export default function loadData(path, options = {}) {
   const {
     pathType = 'relative',
-    treatment = 'mergeX',
-    numberMaxPeaks = 30,
+    numberMaxPeaks = undefined,
     mergeSpan = 0.05,
     norm = true,
   } = options;
@@ -62,13 +60,12 @@ export default function loadData(path, options = {}) {
       spectrum.data.y = normalize(spectrum.data.y);
     }
   }
-  switch (treatment) {
-    case 'mergeX':
-      return dataWeightedMergeX(spectra, { mergeSpan });
-    case 'maxPeaks':
-      return dataKeepMaxPeaks(spectra, { numberMaxPeaks });
-    default:
-      throw new Error(`Unknown treatment type: ${treatment}`);
+  let merged = dataWeightedMergeX(spectra, { mergeSpan });
+
+  if (numberMaxPeaks) {
+    return dataKeepMaxPeaks(merged, { numberMaxPeaks });
+  } else {
+    return dataWeightedMergeX(spectra, { mergeSpan });
   }
 }
 

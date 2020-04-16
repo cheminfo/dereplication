@@ -74,18 +74,12 @@ describe('loadData', () => {
 
     expect(sum(results[0].data.y)).toStrictEqual(1);
   });
-  it('test treatment option (treatment = "maxPeaks")', () => {
+  it('test numberMaxPeaks = 3', () => {
     const results = loadData(maxPeaksPath, {
-      treatment: 'maxPeaks',
       numberMaxPeaks: 3,
       norm: false,
     });
 
     expect(results[0].data).toStrictEqual({ x: [5, 6, 7], y: [5, 6, 7] });
-  });
-  it('test treatment is unknown type', () => {
-    expect(() => loadData(simpleSpectra, { treatment: 'test' })).toThrow(
-      'Unknown treatment type: test',
-    );
   });
 });
