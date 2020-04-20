@@ -19,6 +19,8 @@ DEBUG=testSimilarity node --max-old-space-size=8192 -r esm index.js
 
 The `--max-old-space-size=8192` option has to be used because Node.js cannot handle files this large otherwise.
 
+The code underneath should be the contents of `index.js`.
+
 ```js
 import { similarity as Similarity } from 'ml-distance';
 
