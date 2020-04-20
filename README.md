@@ -49,6 +49,14 @@ computeSimilarities(experimental, predicted, {
 
 ## [API Documentation](https://cheminfo.github.io/dereplication/)
 
+CLick on this link to access the API documentation.
+
+## Project documentation and results
+
+- [dereplication.md](./docs/dereplication.md): explains how the code was written and what problems were encountered.
+- [dereplicationData.md](./docs/dereplicationData.md): shows different similarity results when various parameters are varied. We try to optimize the position of the exact match.
+- [dereplicationAllAlgorithms.md](./docs/dereplicationAllAlgorithms.md): results when testing various similarity algorithms.
+
 ## License
 
 [MIT](./LICENSE)
